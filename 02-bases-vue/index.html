@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <script src="https://unpkg.com/vue@next"></script>
+   
+</head>
+<body>
+    <!-- Vue tiene control de este div -->
+    <div id="myApp">
+
+        <h1>Frases de batman  {{newQuote}} </h1>
+
+        <input type="text" v-model="newQuote"
+        v-on:keypress.enter="addQuote">
+
+        <hr>
+
+        <ul>
+            <!-- Recordatorio: estamos desestructurando
+            el objeto quotes que recibimos de js -->
+            <li v-for="({quote, author}, index) in quotes">
+                <p>{{ index + 1 }} - {{quote}}</p>
+                <!-- <blockquote v-if="author"> - {{author}}</blockquote> -->
+                <blockquote v-show="author"> - {{author}}</blockquote>
+            </li>
+        </ul>
+
+    </div>
+
+
+    
+    <script src='app.js'></script>
+
+</body>
+</html>

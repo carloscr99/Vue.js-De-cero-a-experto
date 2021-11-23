@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <script src="https://unpkg.com/vue@next"></script>
+   
+</head>
+<body>
+    <!-- Vue tiene control de este div -->
+    <div id="myApp">
+
+        <h3>{{ quote }}</h3>
+        <p>{{ author }}</p>
+
+
+        <button v-on:click="cambiarFrase">
+            Cambiar frase</button>
+
+    </div>
+
+
+    
+    <script src='app.js'></script>
+
+</body>
+</html>

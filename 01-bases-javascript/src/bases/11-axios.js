@@ -14,6 +14,10 @@ const giphyApi = axios.create({
     }
 })
 
+export default giphyApi
+
+/*
+
 giphyApi.get('/random').then( resp => {
 
 
@@ -33,3 +37,4 @@ giphyApi.get('/random').then( resp => {
     
 
 })
+*/
