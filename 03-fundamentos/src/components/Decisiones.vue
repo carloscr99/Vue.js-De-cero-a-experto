@@ -52,12 +52,13 @@ export default {
     watch:{
         question( value, oldValue ){
             
-
              this.isValidQuestion = false
+
+             console.log({ value })
 
                if( value.includes('?') ){
                   this.getAnswer()
-                 this.isValidQuestion = true
+                  this.isValidQuestion = true
                }
 
            
