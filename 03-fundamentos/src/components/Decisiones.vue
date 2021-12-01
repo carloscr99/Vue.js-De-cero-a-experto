@@ -1,19 +1,25 @@
+
 <template>
-  <h1>Indecision</h1>
-  <img v-if="url" :src="url" alt="img">
+    <img v-if="img" :src="img" alt="bg">
+    <div class="bg-dark"></div>
 
-<div class="bg-dark"></div>
-<div class="indecision-container">
+    <div class="indecision-container">
 
-    <input v-model="question" type="text" placeholder="Hazme una pregunta" >
-    <p>Para finalizar, introduce el signo (?)</p>
+        <input
+            v-model="question"
+            type="text"
+            placeholder="Hazme una pregunta">
+        <p>Recuerda terminar con un signo de interrogación (?)</p>
 
-    <div v-if="isValidQuestion">
-        <h2> {{ question }}</h2>
-        <h1> {{answer}} </h1>
+        <div v-if="isValidQuestion">
+            <h2>{{ question }}</h2>
+            <h1>{{ answer }}</h1>
+            <!-- Si!: YES -->
+            <!-- No!: No -->
+        </div>
+
     </div>
 
-</div>
 
 </template>
 
@@ -24,7 +30,7 @@ export default {
         return {
             question: null,
             answer: null,
-            url: null,
+            img: null,
             isValidQuestion: false,
         }
 
@@ -33,19 +39,20 @@ export default {
         async getAnswer(){
 
            
-            this.answer = "Pensando..."
+            try {
+                this.answer = "Pensando..."
 
-            const {answer, image} = await fetch('https://yesno.wtf/api').then( resp => resp.json())
+                const {answer, image} = await fetch('https://yesno.wtf/api').then( resp => resp.json())
 
-
-
-            this.answer = answer === "yes" ? "Si!" : "No!"
-          
-            this.url = image
-
-            console.log(this.url)
-           
-
+                this.answer = answer === "yes" ? "Si!" : "No!"
+            
+                this.img = image
+            } catch (error) {
+                console.log('Decisiones: ', error)
+                this.answer = 'No se pudo cargar del API'
+                this.img = null
+                
+            }
 
         }
     },
@@ -59,6 +66,7 @@ export default {
                if( value.includes('?') ){
                   this.getAnswer()
                   this.isValidQuestion = true
+                  console.log({ value })
                }
 
            
