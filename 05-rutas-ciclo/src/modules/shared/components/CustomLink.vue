@@ -1,9 +1,11 @@
 <template>
     <a v-if="isExternalLink" :href="link.to" class="normal-link" >{{link.name}}</a>
 
-    <router-link v-else :to="link.to" v-slot="{ href, isActive }"> 
+    <router-link v-else :to="{ name: link.to, params: { id: link.id } }" v-slot="{ isActive }"> 
+
+        <!-- href -->
         
-        <a :href="href" :class=" isActive ? 'is-active' : 'normal-link' " > {{link.name}} </a>
+        <a :class=" isActive ? 'is-active' : 'normal-link' " > {{link.name}} </a>
 
     </router-link>
 </template>
