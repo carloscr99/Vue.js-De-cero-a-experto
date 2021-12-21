@@ -1,5 +1,5 @@
 import {createRouter, createWebHashHistory } from 'vue-router'
-
+import isAuthenticatedGuard from './auth-guard'
 
 
 const routes = [
@@ -43,6 +43,7 @@ const routes = [
     {
       path: '/dbz',
       name: 'dbz',
+      beforeEnter: [ isAuthenticatedGuard ],
       component: () => import( /* webpackChunkName: "dbzLayoyt" */ '@/modules/dbz/layouts/DragonBallLayout'),
       children: [
         { 
@@ -87,6 +88,53 @@ const routes = [
     history: createWebHashHistory(),
     routes, // short for `routes: routes`
   })
+
+  // guard global - Sicrono
+
+// router.beforeEach( (to, from, next) =>{
+//   console.log({to, from, next})
+
+//   const random = Math.random() * 100
+
+//   if(random > 50){
+//     console.log("Autenticado")
+//     // El next nos redirige a la página que queremos visitar
+//     next()
+//   } else {
+//     console.log(`${random}: Bloqueado por el beforeEach Guard`)
+//     //Nos redirige a una página por defecto
+//     next({name: 'pokemon-home'})
+//   }
+
+// }) 
+
+  // guard global - Asicrono
+
+// const canAccess = () =>{
+//   return new Promise(resolve =>{
+
+//     const random = Math.random() * 100
+
+//     if(random > 50){
+//       console.log("Autenticado - canAccess")
+
+//       resolve(true)
+//     } else {
+//       console.log(`${random}: Bloqueado por el beforeEach Guard - canAcess`)
+//       resolve(false)
+//     }
+
+//   })
+// }
+
+// router.beforeEach( async (to, from, next)=>{
+
+//   const authorized = await canAccess()
+
+//   authorized ? next() : next({name: 'pokemon-home'})
+
+// })
+
 
   export default router
 
