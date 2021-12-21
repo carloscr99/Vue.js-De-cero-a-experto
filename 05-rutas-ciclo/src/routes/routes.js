@@ -46,8 +46,8 @@ const routes = [
       component: () => import( /* webpackChunkName: "dbzLayoyt" */ '@/modules/dbz/layouts/DragonBallLayout'),
       children: [
         { 
-          path: 'home',
-          name: 'dbz-home', 
+          path: 'characters',
+          name: 'dbz-characters', 
           component: () => import( /* webpackChunkName: "Characters" */ '../modules/dbz/pages/Characters')
       },
       { 
