@@ -1,18 +1,18 @@
 <template>
   <div>
         <h1>Counter - vue</h1>
-        <h2>Direct access: {{ $store.state.count }} </h2>
+        <h2>Direct access: {{ $store.state.counter.count }} </h2>
         <h2>Computed: {{ countComputed }} </h2>
 
         <button @click="increment">+1</button>
         <button @click="incrementBy">+5</button>
-        <button @click="randomInt" :disabled="isLoading">Random</button>
+        <button @click="incrementRandomInt" :disabled="isLoading">Random</button>
 
         <h1>MapState</h1>
         <h2>mapState: {{ count }}</h2>
         <h2>lastMutation: {{ lastMutation }}</h2>
 
-        <h2>Direct getter: {{ $store.getters.squareCount }}</h2>
+        <h2>Direct getter: {{ $store.getters['counter/squareCount'] }}</h2>
   </div>
 </template>
 
@@ -26,9 +26,10 @@ export default ({
   
     computed: {
         countComputed(){
-            return this.$store.state.count
+            return this.$store.state.counter.count
         },
-        ...mapState(['count', 'lastMutation', 'isLoading'])
+        //El primer argumento es el nombre del modulo 
+        ...mapState('counter',['count', 'lastMutation', 'isLoading'])
         // ...mapState({
         //     count: state => state.count,
         //     lastMutation: state => state.lastMutation
@@ -38,22 +39,22 @@ export default ({
     methods:{
         increment(){
             //Entre () enviamos el nombre de la mutación que queremos llamar
-            this.$store.commit('increment')
+            this.$store.commit('counter/increment')
         },
         incrementBy(){
             //Entre () enviamos el nombre de la mutación que queremos llamar
-            this.$store.commit('incrementBy', 5)
+            this.$store.commit('counter/incrementBy', 5)
         },
         
         // incrementRandomInt(){
         //     // Llamaos a la propiedad del action
         //     this.$store.dispatch('incrementRandomInt')
         // }
-       // ...mapActions(['incrementRandomInt'])
+       ...mapActions( 'counter', ['incrementRandomInt'])
        //En este caso, a diferéncia del anterior, lo que podemos hacer es cambiarle el nombre -randomInt-
-        ...mapActions({
-            randomInt: 'incrementRandomInt'
-        })
+        // ...mapActions('counter', {
+        //     randomInt: 'incrementRandomInt'
+        // })
     }
 
 
