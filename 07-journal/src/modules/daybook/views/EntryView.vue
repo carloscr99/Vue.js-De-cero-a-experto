@@ -26,7 +26,8 @@
             <textarea v-model="entry.text" placeholder="¿Que tal el día?"></textarea>
 
         </div>
-        <Fab icon="fa-save"/>
+        <Fab icon="fa-save"
+        @on:click="saveEntry"/>
 
         <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.OciRQXR70LOSpcj15y-xagHaEb%26pid%3DApi&f=1" alt="entry-picture"
         class="img-thumbnail">
@@ -79,6 +80,9 @@ export default {
             if ( !entry ) this.$router.push({ name: 'no-entry' })
 
             this.entry = entry
+        },
+        saveEntry(){
+            console.log("guardando entrada")
         }
     },
     created(){
