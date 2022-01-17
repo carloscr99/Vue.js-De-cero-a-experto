@@ -39,7 +39,7 @@
 
 <script>
 import { defineAsyncComponent } from 'vue';
-import { mapGetters } from 'vuex';  // computed!
+import { mapGetters, mapActions } from 'vuex';  // computed!
 import getDayMonthYear from '../helpers/getDayMonthYear'
 
 export default {
@@ -61,6 +61,7 @@ export default {
 
     computed: {
         ...mapGetters('journal', ['getEntryById']),
+        
         day() {
             const { day } = getDayMonthYear( this.entry.date )
             return day
@@ -75,14 +76,40 @@ export default {
         }
     },
     methods: {
+        ...mapActions('journal', ['updateEntry', 'createEntry']),
         loadEntry(){
-            const entry = this.getEntryById(this.id)
-            if ( !entry ) this.$router.push({ name: 'no-entry' })
+            let entry
+            if(this.id === 'new'){
+                entry = {
+                    text: '',
+                    date: new Date().getTime()
+                }
+            }else{
+                entry = this.getEntryById(this.id)
+                if ( !entry ) return this.$router.push({ name: 'no-entry' })
+            }
+
+          
 
             this.entry = entry
         },
-        saveEntry(){
-            console.log("guardando entrada")
+        async saveEntry(){
+           
+        if( this.entry.id ){
+            // Actualizar
+             // Action del journal Module
+            this.updateEntry(this.entry)
+          
+        }else{
+            //Crear una nueva entrada
+            console.log("nueva entrada")
+            // await action
+            const id = await this.createEntry(this.entry)
+
+            this.$router.push({name: 'entry', params: { id }})
+            // redirectTo => entry, param: id
+        }
+           
         }
     },
     created(){
