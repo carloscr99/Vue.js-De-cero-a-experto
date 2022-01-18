@@ -33,3 +33,10 @@ export const addEntry = (  state, entry ) =>{
     
     
 }
+
+export const deleteEntry = ( state, id ) =>{
+
+//Eliminar del state.entries la entrada correspondiente a ese id
+state.entries = state.entries.filter(entry => entry.id !== id)
+
+}

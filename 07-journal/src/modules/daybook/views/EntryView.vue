@@ -9,11 +9,18 @@
             </div>
 
             <div>
-                <button class="btn btn-danger mx-2">
+
+                <input type="file" @change="onSelectedImage"
+                    ref="imageSelector" v-show="false"
+                    accept="image/png, image/jpeg">
+
+                <button v-if="entry.id" class="btn btn-danger mx-2"
+                    @click="onDeleteEntry">
                     Borrar
                     <i class="fa fa-trash-alt"></i>
                 </button>
-                <button class="btn btn-primay">
+                <button class="btn btn-primay"
+                    @click="onSelectImage">
                     Subir foto
                     <i class="fa fa-upload"></i>
                 </button>
@@ -29,8 +36,12 @@
         <Fab icon="fa-save"
         @on:click="saveEntry"/>
 
-        <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.OciRQXR70LOSpcj15y-xagHaEb%26pid%3DApi&f=1" alt="entry-picture"
+        <img v-if="entry.picture && !localImage" :src="entry.picture" alt="entry-picture"
         class="img-thumbnail">
+
+          <img v-if="localImage" :src="localImage" alt="entry-picture"
+        class="img-thumbnail">
+
 
 
     </template>
@@ -41,6 +52,8 @@
 import { defineAsyncComponent } from 'vue';
 import { mapGetters, mapActions } from 'vuex';  // computed!
 import getDayMonthYear from '../helpers/getDayMonthYear'
+import uploadImage from '../helpers/uploadImage'
+import Swal from 'sweetalert2'
 
 export default {
     props: {
@@ -55,7 +68,9 @@ export default {
     //Objeto reactivo
     data() {
         return {
-            entry: null
+            entry: null,
+            localImage: null,
+            file: null
         }
     },
 
@@ -76,7 +91,7 @@ export default {
         }
     },
     methods: {
-        ...mapActions('journal', ['updateEntry', 'createEntry']),
+        ...mapActions('journal', ['updateEntry', 'createEntry', 'deleteEntry']),
         loadEntry(){
             let entry
             if(this.id === 'new'){
@@ -94,22 +109,89 @@ export default {
             this.entry = entry
         },
         async saveEntry(){
-           
-        if( this.entry.id ){
-            // Actualizar
-             // Action del journal Module
-            this.updateEntry(this.entry)
-          
-        }else{
-            //Crear una nueva entrada
-            console.log("nueva entrada")
-            // await action
-            const id = await this.createEntry(this.entry)
 
-            this.$router.push({name: 'entry', params: { id }})
-            // redirectTo => entry, param: id
-        }
+            new Swal({
+                title: 'Espere por favor',
+                allowOutsideClick: false
+            })
+
+            Swal.showLoading()
+
+            const picture = await uploadImage(this.file)
+
+            console.log(picture)
+
+            this.entry.picture = picture
            
+            if( this.entry.id ){
+                // Actualizar
+                // Action del journal Module
+                this.updateEntry(this.entry)
+            
+            }else{
+                //Crear una nueva entrada
+                console.log("nueva entrada")
+                // await action
+                const id = await this.createEntry(this.entry)
+
+                this.$router.push({name: 'entry', params: { id }})
+                // redirectTo => entry, param: id
+            }
+
+            this.file = null
+            Swal.fire('Guardado', 'Entrada registrada correctamente', 'success')
+
+           
+        },
+        async onDeleteEntry(){
+
+            const { isConfirmed } = await Swal.fire({
+                title: '¿Estás seguro?',
+                text: 'Una vez borrado, no se puede recuperar',
+                icon: 'warning',
+                showDenyButton: true,
+                confirmButtonText: 'Si, estoy seguro'
+            })
+
+
+            if(isConfirmed){
+
+                new Swal({
+                title: 'Espere por favor',
+                allowOutsideClick: false
+                })
+
+                Swal.showLoading()
+                    
+                console.log('delete', this.entry)
+    
+                await this.deleteEntry(this.entry.id)
+    
+                this.$router.push({name: 'no-entry'})
+
+                Swal.fire('Eliminado', '', 'success')
+
+            }
+        },
+        onSelectedImage(event){
+            
+            const file = event.target.files[0]
+            if( !file ){
+                this.localImage = null
+                this.file = null
+                return
+            }
+
+            const fr = new FileReader()
+
+            this.file = file
+
+            fr.onload = () => this.localImage = fr.result
+            fr.readAsDataURL( file )
+                        
+        },
+        onSelectImage(){
+            this.$refs.imageSelector.click()
         }
     },
     created(){
