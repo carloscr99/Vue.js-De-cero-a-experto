@@ -14,6 +14,7 @@
 <script>
 import { defineAsyncComponent } from 'vue';
 export default {
+    name: 'NoEntrySelected',
     components: {
         Fab: defineAsyncComponent(() => import('../components/Fab.vue'))
     },
