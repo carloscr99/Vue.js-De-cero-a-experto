@@ -41,11 +41,13 @@ export const updateEntry = async( {commit} , entry) => { //entry debe de ser un 
 
     const resp = await journalApi.put( `entries/${entry.id}.json`, dataToSave)
 
+    dataToSave.id = entry.id
+
     console.log(resp)
 
     //Commit de una mutación -> updateEntry
     //... para no enviar el objeto como referencia
-    commit('updateEntry', {...entry})
+    commit('updateEntry', {...dataToSave})
     
 }
 export const createEntry = async( { commit }, entry ) =>{
