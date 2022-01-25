@@ -146,6 +146,8 @@ export default {
         },
         async onDeleteEntry(){
 
+            console.log('se llamo aquí')
+
             const { isConfirmed } = await Swal.fire({
                 title: '¿Estás seguro?',
                 text: 'Una vez borrado, no se puede recuperar',
@@ -157,14 +159,16 @@ export default {
 
             if(isConfirmed){
 
-                new Swal({
+                console.log('isConfirmed')
+
+                Swal.fire({
                 title: 'Espere por favor',
                 allowOutsideClick: false
                 })
 
                 Swal.showLoading()
                     
-                console.log('delete', this.entry)
+                console.log("A punto de eliminar")
     
                 await this.deleteEntry(this.entry.id)
     
