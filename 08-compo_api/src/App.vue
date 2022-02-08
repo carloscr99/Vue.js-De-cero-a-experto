@@ -3,9 +3,17 @@
     <div id="nav">
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link> |
-    <router-link :to="{name: 'Counter'}">Counter</router-link>
+    <router-link :to="{name: 'Counter'}">Counter</router-link> |
+    <router-link :to="{name: 'Users'}">Users</router-link> |
+    <router-link :to="{name: 'pokemon-search'}">Pokemon</router-link> 
   </div>
-  <router-view/>
+<router-view v-slot="{ Component, route }">
+  <transition>
+    <keep-alive>
+      <component :is="Component" :key="route.name" />
+    </keep-alive>
+  </transition>
+</router-view>
   </div>
 </template>
 
