@@ -1,16 +1,47 @@
 
 
 <template>
-  <div class="modal-background fade-in">
+  <div class="modal-background fade-in"
+    @click.self="$emit('on:close')">
       <div class="modal-container">
 
-          <h1>hola modal</h1>
+         <!-- <slot/> -->
+
+         <slot name="header"/>
+         <slot name="body"/>
+         <slot name="footer"/>
+
+         <slot name="exposed" :newTitle="newTitle" hola="mundo">
+         </slot>
+
+        <!-- <slot>
+          <div class="center">
+            Esto aparece si no tenemos contendido
+
+          </div>
+        </slot> -->
+
       </div>
   </div>
 </template>
 
 <script>
 export default {
+
+  props: {
+    title: {
+      type: String,
+      required: false
+    }
+  },
+  emits:['on:close'],
+  setup(props, context){
+
+    return{
+      newTitle: props.title?.toUpperCase()
+    }
+
+  }
 
 }
 </script>
