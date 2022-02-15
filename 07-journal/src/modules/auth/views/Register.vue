@@ -60,9 +60,9 @@ export default {
 				console.log('onSubmit', userForm.value.name)
 
 
-				const { ok, message } = await createUser(userForm)
+				const { ok, message } = await createUser(userForm.value)
 
-				console.log(ok, message)
+				console.log('onSubmit fin ->', ok, message)
 			}
 		}
 	}
