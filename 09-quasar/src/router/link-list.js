@@ -7,10 +7,22 @@ export const linksList = [
       link: "Typography",
     },
     {
-      title: "Flex Layour",
+      title: "Flex Layout",
       caption: "la-eye",
       icon: "las la-graduation-cap",
       link: "Flex",
+    },
+    {
+      title: "Dialogs",
+      caption: "Dialogos y confirmaciones",
+      icon: "las la-window-minimize",
+      link: "Dialog",
+    },
+    {
+      title: "Forms",
+      caption: "Input y validaciones",
+      icon: "lab la-wpforms",
+      link: "Forms",
     },
     {
       title: "Docs",

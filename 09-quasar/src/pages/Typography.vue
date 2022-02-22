@@ -31,7 +31,7 @@
 color="primary"
 label="Abrir menú lateral"
 class="q-mt-md"
-@click="togglSeideMenu"
+@click="toggleSideMenu"
 />
   </q-page>
 </template>

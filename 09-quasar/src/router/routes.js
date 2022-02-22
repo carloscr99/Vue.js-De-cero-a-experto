@@ -6,6 +6,8 @@ const routes = [
       { path: "", component: () => import("pages/Index.vue") },
       { path: "Typography", name:"Typography", component: () => import("pages/Typography.vue") },
       { path: "Flex", name:"Flex", component: () => import("pages/Flex.vue") },
+      { path: "Dialog", name:"Dialog", component: () => import("pages/Dialogs.vue") },
+      { path: "Forms", name:"Forms", component: () => import("pages/Forms.vue") },
      ],
   },
 
