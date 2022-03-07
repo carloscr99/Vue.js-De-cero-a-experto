@@ -29,7 +29,7 @@ class="loading-map d-flex justify-content-center align-items-center">
   position: fixed;
   width: 100vw;
   height: 100vh;
-  background-color: red;
+
 }
 .loading-map{
   position: fixed;
