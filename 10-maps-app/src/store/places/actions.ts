@@ -22,6 +22,7 @@ const actions: ActionTree<PlacesState, StateInterface> = {
     async searchPlacesByTerm({commit, state}, query:string): Promise<Feature[]>{
 
         if(query.length === 0){
+            
             commit('setPlaces', []);
             return [];
         } 
@@ -39,7 +40,7 @@ const actions: ActionTree<PlacesState, StateInterface> = {
        });
 
        console.log(resp.data.features)
-
+        //Llama a la mutación y envia datos
        commit('setPlaces', resp.data.features);
 
        return resp.data.features;

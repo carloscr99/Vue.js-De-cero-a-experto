@@ -1,7 +1,9 @@
-import { useStore } from 'vuex';
+import { storeKey, useStore } from 'vuex';
 import { computed } from 'vue';
 import { StateInterface } from '../store/index';
 import mapboxgl from 'mapbox-gl';
+import { Feature } from '@/interfaces/places';
+import { LngLat } from '../store/map/actions';
 
 
 export const useMapStore = () =>{
@@ -11,7 +13,7 @@ export const useMapStore = () =>{
 
     return {
         map: computed(()=> store.state.map.map ),
-        distance: computed(()=> store.state.map.distante ),
+        distance: computed(()=> store.state.map.distance ),
         duration: computed(()=> store.state.map.duration ),
 
         //Getters
@@ -20,8 +22,11 @@ export const useMapStore = () =>{
         //Mutations
 
         setMap:(map: mapboxgl.Map) => store.commit('map/setMap', map),
+        setPlaceMarkers: (places: Feature[]) => store.commit('map/setPlaceMarkers', places),
 
         //Actions
+
+        getRouteBetweenPoints: (start: LngLat, end: LngLat) => store.dispatch('map/getRouteBetweenPoints', {start, end})
 
 
     }
