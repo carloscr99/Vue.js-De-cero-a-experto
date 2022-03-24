@@ -17,7 +17,7 @@ const actions: ActionTree<MapState, StateInterface> = {
         console.log(resp.data.routes[0].geometry.coordinates)
 
         commit('setDistanceDuration', {
-            distaance: resp.data.routes[0].distance,
+            distance: resp.data.routes[0].distance,
             duration: resp.data.routes[0].duration
         });
 
