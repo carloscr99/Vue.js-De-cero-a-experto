@@ -3,9 +3,9 @@
     <img alt="Vue logo" src="../assets/logo.png">
 
     <h1>Hola mundo</h1>
-    <button @click="goToDaybook" class="btn btn-primary">Primary</button>
-    <button @click="goToDaybook" class="btn btn-secondary">Seconday</button>
-    <button @click="goToDaybook" class="btn btn-success">Success</button>
+    <button @click="goToDayBook" class="btn btn-primary">Primary</button>
+    <button @click="goToDayBook" class="btn btn-secondary">Seconday</button>
+    <button @click="goToDayBook" class="btn btn-success">Success</button>
 
   </div>
 </template>
